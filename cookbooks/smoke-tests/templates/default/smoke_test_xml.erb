@@ -230,7 +230,7 @@
       <error to="join-smokes"/>
   </action>
   <join name="join-smokes" to="status-decision"/>
-  <decision name="status-decision"/>
+  <decision name="status-decision">
     <switch>
      <case to="report-success-zabbix">
        ${wf:lastErrorNode() eq ""}
