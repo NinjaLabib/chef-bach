@@ -20,13 +20,13 @@ module HadoopSmokeTests
       cmd = Mixlib::ShellOut.new(oozie_cmd, timeout: 20).run_command
       if cmd.exitstatus == 0
         Chef::Log.debug("Job submission result: #{cmd.stdout}")
-				oozie_job_id = cmd.stdout[5..-1]
-				report_cmd = "curl -X POST http://100.70.17.27:8080/smoke_tests/#{node.chef_environment}/#{oozie_job_id}"
-				cmd2 = Mixlib::ShellOut.new(report_cmd, timeout: 20).run_command
-				if cm2.exitstatus == 0 
-					Chef::Log.debug("Sent Smoke Test ID to Reporter #{cmd2.stdout}")
-				else
-					Chef::Log.error("Sending to Reporter failed #{cmd2.stderror}")
+        oozie_job_id = cmd.stdout[5..-1]
+        report_cmd = "curl -X POST http://100.70.17.27:8080/smoke_tests/#{node.chef_environment}/#{oozie_job_id}"
+        cmd2 = Mixlib::ShellOut.new(report_cmd, timeout: 20).run_command
+        if cm2.exitstatus == 0 
+          Chef::Log.debug("Sent Smoke Test ID to Reporter #{cmd2.stdout}")
+        else
+          Chef::Log.error("Sending to Reporter failed #{cmd2.stderror}")
 			else
         # raise exception?
         Chef::Log.error("Job submission result: #{cmd.stderr}")
